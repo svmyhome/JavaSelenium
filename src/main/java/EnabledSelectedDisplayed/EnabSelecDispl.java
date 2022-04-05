@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
-/** 56 isDisplayed, isSelected, isEnabled, existing element on screen*/
+/** 56 - 57 isDisplayed, isSelected, isEnabled, existing element on screen*/
 public class EnabSelecDispl {
     static WebDriver driver;
 
