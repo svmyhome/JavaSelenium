@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
-/** 57 isDisplayed, isSelected, isEnabled */
+/** 56 isDisplayed, isSelected, isEnabled, existing element on screen*/
 public class EnabSelecDispl {
     static WebDriver driver;
 
@@ -29,6 +29,9 @@ public class EnabSelecDispl {
         WebElement displ2 = driver.findElement(By.xpath("//a[text()='Apple']"));
         System.out.println(displ1.isDisplayed());
         System.out.println(displ2.isDisplayed());
+        driver.get("https://ru.ebay.com/");
+        System.out.println(driver.findElements(By.xpath("//a[@href='/login']")).size()); // Если елемента нет то в массиве будет 0 и он не бросит исключение а если элемент есть то будет количество, на основани этого можно сделать проверку
+
         driver.quit();
     }
 }
