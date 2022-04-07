@@ -1,7 +1,5 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class LoginPage {
     private WebDriver driver;
@@ -10,47 +8,39 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//h1[text()='Sign in to GitHub']")
-    private WebElement heading;
-    @FindBy(xpath = "//input[@id='login_field']")
-    private WebElement userField;
-    @FindBy(xpath = "//input[@id='password']")
-    private WebElement passField;
-    @FindBy(xpath = "//input[@name='commit']")
-    private WebElement signInButton;
-    @FindBy(xpath = "//div[@class='px-2']")
-    private WebElement error;
-    @FindBy(xpath = "//a[text()='Create an account']")
-    private WebElement linkSignUp;
-
-
+    private By heading = By.xpath("//h1[text()='Sign in to GitHub']");
+    private By userField = By.xpath("//input[@id='login_field']");
+    private By passField = By.xpath("//input[@id='password']");
+    private By signInButton = By.xpath("//input[@name='commit']");
+    private By error = By.xpath("//div[@class='px-2']");
+    private By linkSignUp = By.xpath("//a[text()='Create an account']");
 
     public LoginPage typeUserName(String username) {
-        userField.sendKeys(username);
+        driver.findElement(userField).sendKeys(username);
         return this;
     }
     public LoginPage typeUserPass(String pass) {
-        passField.sendKeys(pass);
+        driver.findElement(passField).sendKeys(pass);
         return this;
     }
 
     public String getHeadingText() {
-        return heading.getText();
+        return driver.findElement(heading).getText();
     }
 
     public String getErrorText() {
-        return error.getText();
+        return driver.findElement(error).getText();
     }
 
     public SignUpPage createAnAccount() {
-        linkSignUp.click();
+        driver.findElement(linkSignUp).click();
         return new SignUpPage(driver);
     }
 
     public LoginPage LoginWithInvalidCreds(String username, String pass) {
         this.typeUserName(username);
         this.typeUserPass(pass);
-        signInButton.click();
+        driver.findElement(signInButton).click();
         return new LoginPage(driver);
     }
 }

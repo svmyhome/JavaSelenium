@@ -1,6 +1,5 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
 
@@ -23,8 +22,7 @@ public class MainClass {
         loginPage.createAnAccount();*/
         driver.get("https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home");
 
-    //   SignUpPage signUpPage = new SignUpPage(driver);
-        SignUpPage signUpPage = PageFactory.initElements(driver, SignUpPage.class);
+       SignUpPage signUpPage = new SignUpPage(driver);
         System.out.println(signUpPage.getAdventure());
 
 //       signUpPage.typeEmailField("helloWorld123321@mail.ru");

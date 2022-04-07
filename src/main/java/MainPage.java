@@ -1,7 +1,5 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class MainPage {
     private WebDriver driver;
@@ -9,33 +7,28 @@ public class MainPage {
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
-
-    @FindBy(xpath = "//a[@href='/login']")
-    private WebElement signInButton;
-    @FindBy(xpath = "//a[contains(text(),'Sign up')]")
-    private WebElement signUpButton;
-    @FindBy(xpath = "//button[contains(text(),'Sign up for GitHub')]")
-    private WebElement signUpGithub;
-    @FindBy(xpath = "//input[@id='user_email']")
-    private WebElement emailField;
+    private By signInButton = By.xpath("//a[@href='/login']");
+    private By signUpButton = By.xpath("//a[contains(text(),'Sign up')]");
+    private By signUpGithub = By.xpath("//button[contains(text(),'Sign up for GitHub')]");
+    private By emailField = By.xpath("//input[@id='user_email']");
 
     public LoginPage clickSignIn() {
-        signInButton.click();
+        driver.findElement(signInButton).click();
         return new LoginPage(driver);
     }
 
     public SignUpPage clickSignUp() {
-        signUpButton.click();
+        driver.findElement(signUpButton).click();
         return new SignUpPage(driver);
     }
 
     public SignUpPage clickSignUpGitHub() {
-        signUpGithub.click();
+        driver.findElement(signUpGithub).click();
         return new SignUpPage(driver);
     }
 
     public MainPage typeEmailField(String email) {
-        emailField.sendKeys(email);
+        driver.findElement(emailField).sendKeys(email);
         return this;
     }
 

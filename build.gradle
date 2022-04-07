@@ -15,6 +15,7 @@ ext {
     commons_io_version = '2.11.0'
 }
 dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:${junit_jupiter_api_version}'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_engine_version}'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.3'
