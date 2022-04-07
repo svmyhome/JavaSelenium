@@ -18,11 +18,11 @@ public class TestActionClass {
 
     public static void main(String[] args) throws InterruptedException {
         WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
-        driver.manage().window().maximize(); // установка максимального размера экрана
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ РѕР¶РёРґР°РЅРёРµ
+        driver.manage().window().maximize(); // СѓСЃС‚Р°РЅРѕРІРєР° РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЂР°Р·РјРµСЂР° СЌРєСЂР°РЅР°
         driver.get("https://ru.ebay.com/");
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Главная']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Р“Р»Р°РІРЅР°СЏ']")));
         WebElement el = driver.findElement(By.xpath("//li[@class='hl-cat-nav__js-tab']//a[@href='https://www.ebay.com/b/Electronics/bn_7000259124']"));
         Actions action = new Actions(driver);
         action.moveToElement(el).build().perform();
