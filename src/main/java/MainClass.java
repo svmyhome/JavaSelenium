@@ -13,10 +13,14 @@ public class MainClass {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         driver.manage().window().maximize(); // установка максимального размера экрана
-        driver.get("https://github.com/");
-
-        MainPage mainPage = new MainPage(driver);
-        mainPage.clickSignIn();
+   //     driver.get("https://github.com/");
+//        MainPage mainPage = new MainPage(driver);
+//        mainPage.clickSignIn();
+        driver.get("https://github.com/login");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.LoginWithInvalidCreds("123", "dfffd");
+        System.out.println(loginPage.getErrorText());
+        loginPage.createAnAccount();
 
     }
 }
