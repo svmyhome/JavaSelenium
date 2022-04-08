@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.*;
 
-public class TestMain {
+public class TestMainTest {
 
     @BeforeAll
     public static void beforeAllMethod() {
