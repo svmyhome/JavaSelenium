@@ -42,6 +42,13 @@ public class LoginPageTest {
         Assertions.assertEquals("Incorrect username or password.", errText);
     }
 
+    @Test
+    public void goToAnAccount() {
+        SignUpPage signUpPage = loginPage.createAnAccount();
+        String heading = signUpPage.getAdventure();
+        Assertions.assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+    }
+
     @AfterAll
     public static void tearDown() {
         driver.quit();
