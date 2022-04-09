@@ -4,9 +4,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-public class MainTest {
+public class MainPageTest {
     private static WebDriver driver;
-    private MainPage mainpage;
+    private static MainPage mainpage;
 
     @BeforeAll
     public static void setUpAll() {
@@ -14,6 +14,7 @@ public class MainTest {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         driver.manage().window().maximize(); // установка максимального размера экрана
+        mainpage = new MainPage(driver);
     }
 
     @BeforeEach
@@ -21,16 +22,22 @@ public class MainTest {
         driver.get("https://github.com/");
     }
 
+
     @Test
     public void goTologinPage() {
-        mainpage = new MainPage(driver);
         LoginPage loginPage = mainpage.clickSignIn();
         String heading = loginPage.getHeadingText();
         Assertions.assertEquals("Sign in to GitHub", heading);
     }
+
+    @Test
+    public void doToclickSignUp(){
+        SignUpPage signUpPage = mainpage.clickSignUp();
+        String heading = signUpPage.getAdventure();
+        Assertions.assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+    }
     @Test
     public void doRegister(){
-        mainpage = new MainPage(driver);
         SignUpPage signUpPage = mainpage.register("asdg@mail.ru");
         String heading = signUpPage.getAdventure();
         Assertions.assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);

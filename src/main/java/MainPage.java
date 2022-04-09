@@ -22,14 +22,18 @@ public class MainPage {
         return new SignUpPage(driver);
     }
 
-    public SignUpPage clickSignUpGitHub() {
-        driver.findElement(signUpGithub).click();
-        return new SignUpPage(driver);
-    }
-
     public MainPage typeEmailField(String email) {
         driver.findElement(emailField).sendKeys(email);
         return this;
+    }
+
+    public String gettypeEmailField() {
+        return driver.findElement(emailField).getText();
+    }
+
+    public SignUpPage clickSignUpGitHub() {
+        driver.findElement(signUpGithub).click();
+        return new SignUpPage(driver);
     }
 
     public SignUpPage register(String email) {

@@ -12,18 +12,20 @@ public class MainClass {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         driver.manage().window().maximize(); // установка максимального размера экрана
-   //     driver.get("https://github.com/");
+//        driver.get("https://github.com/");
 //        MainPage mainPage = new MainPage(driver);
+//        mainPage.typeEmailField("jfjfvjfjvnfj");
+//        System.out.println("==========" + mainPage.gettypeEmailField());
 //        mainPage.clickSignIn();
-//        driver.get("https://github.com/login");
-     /*   LoginPage loginPage = new LoginPage(driver);
-        loginPage.LoginWithInvalidCreds("123", "dfffd");
+        driver.get("https://github.com/login");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.LoginWithInvalidCreds("", "");
         System.out.println(loginPage.getErrorText());
-        loginPage.createAnAccount();*/
-        driver.get("https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home");
+//        loginPage.createAnAccount();
+//        driver.get("https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home");
 
-       SignUpPage signUpPage = new SignUpPage(driver);
-        System.out.println(signUpPage.getAdventure());
+//       SignUpPage signUpPage = new SignUpPage(driver);
+//        System.out.println(signUpPage.getAdventure());
 
 //       signUpPage.typeEmailField("helloWorld123321@mail.ru");
 //        try {
@@ -33,7 +35,7 @@ public class MainClass {
 //        }
 //        signUpPage.clickEmailButton("helloWorld123321@mail.ru");
 //        signUpPage.typePassField("s21c12@com.ru", "cjkdnjsdncjndj");
-        signUpPage.clickpassButton("s21c12@com.ru", "Vjkdnjsd1!ncjndj");
+  //      signUpPage.clickpassButton("s21c12@com.ru", "Vjkdnjsd1!ncjndj");
 
     }
 }
