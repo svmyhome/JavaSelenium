@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.*;
 
+import java.util.concurrent.TimeUnit;
+
 public class TestMainTest {
 
     @BeforeAll
@@ -43,6 +45,7 @@ public class TestMainTest {
     }
 
     @Test
+    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS) //  Проверка по таимауту
     public void assertArraysMethod7True() {
         int[] expected = {1, 3, 2, 6};
         int[] actual = {1, 3, 2, 6};
