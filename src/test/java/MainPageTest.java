@@ -10,10 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MainPageTest {
     private static WebDriver driver;
     private static MainPage mainpage;
+    private static String pathChromedriver = "libs/chromedriver.exe";
 
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", pathChromedriver);
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         driver.manage().window().maximize(); // установка максимального размера экрана
