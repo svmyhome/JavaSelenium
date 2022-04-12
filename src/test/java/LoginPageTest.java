@@ -7,12 +7,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class LoginPageTest {
     public static WebDriver driver;
     public static LoginPage loginPage;
 
     @BeforeAll
-    public static void setUpAll() {
+    static void setUpAll() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
@@ -22,35 +24,35 @@ public class LoginPageTest {
     }
 
     @Test
-    public void errorEmptyLoginPassword() {
-        loginPage.LoginWithInvalidCreds("","");
+    void errorEmptyLoginPassword() {
+        loginPage.LoginWithInvalidCreds("", "");
         String errText = loginPage.getErrorText();
-        Assertions.assertEquals("Incorrect username or password.", errText);
+        assertEquals("Incorrect username or password.", errText);
     }
 
     @Test
-    public void errorEmptyPassword() {
-        loginPage.LoginWithInvalidCreds("ssdsdas","");
+    void errorEmptyPassword() {
+        loginPage.LoginWithInvalidCreds("ssdsdas", "");
         String errText = loginPage.getErrorText();
-        Assertions.assertEquals("Incorrect username or password.", errText);
+        assertEquals("Incorrect username or password.", errText);
     }
 
     @Test
-    public void errorEmptyLogin() {
-        loginPage.LoginWithInvalidCreds("","sdsdsdsd");
+    void errorEmptyLogin() {
+        loginPage.LoginWithInvalidCreds("", "sdsdsdsd");
         String errText = loginPage.getErrorText();
-        Assertions.assertEquals("Incorrect username or password.", errText);
+        assertEquals("Incorrect username or password.", errText);
     }
 
     @Test
-    public void goToAnAccount() {
+    void goToAnAccount() {
         SignUpPage signUpPage = loginPage.createAnAccount();
         String heading = signUpPage.getAdventure();
-        Assertions.assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
     }
 
     @AfterAll
-    public static void tearDown() {
+    static void tearDown() {
         driver.quit();
     }
 

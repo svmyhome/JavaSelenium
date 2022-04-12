@@ -4,12 +4,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+//TODO refactoring path "/libs/chromedriver"
 public class MainPageTest {
     private static WebDriver driver;
     private static MainPage mainpage;
 
     @BeforeAll
-    public static void setUpAll() {
+    static void setUpAll() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
@@ -18,32 +21,34 @@ public class MainPageTest {
     }
 
     @BeforeEach
-    public void setUpEach() {
+    void setUpEach() {
         driver.get("https://github.com/");
     }
 
 
     @Test
-    public void goTologinPage() {
+    void goTologinPage() {
         LoginPage loginPage = mainpage.clickSignIn();
         String heading = loginPage.getHeadingText();
-        Assertions.assertEquals("Sign in to GitHub", heading);
+        assertEquals("Sign in to GitHub", heading);
     }
 
     @Test
-    public void doToclickSignUp(){
+    void doToclickSignUp() {
         SignUpPage signUpPage = mainpage.clickSignUp();
         String heading = signUpPage.getAdventure();
-        Assertions.assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
     }
+
     @Test
-    public void doRegister(){
+    void doRegister() {
         SignUpPage signUpPage = mainpage.register("asdg@mail.ru");
         String heading = signUpPage.getAdventure();
-        Assertions.assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
     }
+
     @AfterAll
-    public static void tearDown(){
+    static void tearDown() {
         driver.quit();
     }
 
