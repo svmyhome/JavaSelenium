@@ -1,71 +1,92 @@
 import org.junit.jupiter.api.*;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * AssertTimeout chapter 25
+ */
+//TODO @extendWith()
 public class TestMainTest {
 
     @BeforeAll
-    public static void beforeAllMethod() {
+    static void beforeAllMethod() {
         System.out.println("All class");
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         System.out.println("each method");
     }
 
     @Test
-    public void assertTrueMethod1() {
-        Assertions.assertTrue(2 == 2, "Value are not true!");
+    void assertTrueMethod1() {
+        assertTrue(2 == 2, "Value are not true!");
     }
 
     @Test
-    public void assertFalseMethod2() {
-        Assertions.assertFalse(2 == 2, "Value are not false!");
+    void assertFalseMethod2() {
+        assertFalse(2 == 2, "Value are not false!");
     }
 
     @Test
-    public void assertNullMethod3() {
-        Assertions.assertNull(2, "Value are not null!");
+    void assertNullMethod3() {
+        assertNull(2, "Value are not null!");
     }
 
     @Test
-    public void assertNotNullMethod4() {
-        Assertions.assertNotNull(2, "Value are null!");
+    void assertNullMethod31() {
+        assertNull(null, "Value are not null!");
     }
 
     @Test
-    public void assertEqualsMethod5() {
-        Assertions.assertEquals(20, 10 + 5, "Value are not equals!");
+    void assertNotNullMethod4() {
+        assertNotNull(2, "Value are null!");
     }
 
     @Test
-    public void assertNotEqualsMethod6() {
-        Assertions.assertNotEquals(20, 10 + 5, "Value are equals!");
+    void assertEqualsMethod5() {
+        assertEquals(20, 10 + 5, "Value are not equals!");
     }
 
     @Test
-    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS) //  Проверка по таимауту
-    public void assertArraysMethod7True() {
+    void assertNotEqualsMethod6() {
+        assertNotEquals(20, 10 + 5, "Value are equals!");
+    }
+
+    @Test
+    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS)
+        //  Проверка по таимауту
+    void assertArraysMethod7True() {
         int[] expected = {1, 3, 2, 6};
         int[] actual = {1, 3, 2, 6};
-        Assertions.assertArrayEquals(expected, actual, "Arrays are not equals");
+        assertArrayEquals(expected, actual, "Arrays are not equals");
     }
 
     @Test
-    public void assertArraysMethod7False() {
+    void assertArraysMethod7False() {
         int[] expected = {1, 3, 2, 6};
         int[] actual = {1, 2, 2, 6};
-        Assertions.assertArrayEquals(expected, actual, "Arrays are not equals");
+        assertArrayEquals(expected, actual, "Arrays are not equals");
+    }
+
+    @Test
+    void assertArraysTimeoutMethod() {
+        int[] expected = {1, 3, 2, 6};
+        int[] actual = {1, 2, 2, 6};
+        //assertArrayEquals(expected, actual, "Arrays are not equals");
+        assertTimeout(Duration.ofMillis(1), () -> Thread.sleep(10000), () -> "Testing prductivity");
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         System.out.println("each method");
     }
 
     @AfterAll
-    public static void afterAllMethod() {
+    static void afterAllMethod() {
         System.out.println("All class");
     }
 }
