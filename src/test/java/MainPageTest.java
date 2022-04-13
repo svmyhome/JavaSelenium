@@ -6,7 +6,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//TODO refactoring path "/libs/chromedriver"
+
 public class MainPageTest {
     private static WebDriver driver;
     private static MainPage mainpage;
@@ -28,6 +28,7 @@ public class MainPageTest {
 
 
     @Test
+    @DisplayName("Verify that when button 'SignIn' has been clicked a new page has been opened")
     void goTologinPage() {
         LoginPage loginPage = mainpage.clickSignIn();
         String heading = loginPage.getHeadingText();
@@ -35,13 +36,15 @@ public class MainPageTest {
     }
 
     @Test
+    @DisplayName("Verify that when button 'SignUP' has been clicked a new page has been opened")
     void doToclickSignUp() {
         SignUpPage signUpPage = mainpage.clickSignUp();
         String heading = signUpPage.getAdventure();
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
     }
 
-    @Test
+    @RepeatedTest(2)
+    @DisplayName("Verify that when email field can be filled")
     void doRegister() {
         SignUpPage signUpPage = mainpage.register("asdg@mail.ru");
         String heading = signUpPage.getAdventure();

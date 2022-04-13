@@ -8,7 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+//TODO is needed to add in all methods @Displayname
+//TODO must be added to some methods @RepeatedTest
 public class LoginPageTest {
     public static WebDriver driver;
     public static LoginPage loginPage;
