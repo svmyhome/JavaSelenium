@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -35,7 +38,7 @@ public class MainPageTest {
         assertEquals("Sign in to GitHub", heading);
     }
 
-    @Test
+    @RepeatedTest(2)
     @DisplayName("Verify that when button 'SignUP' has been clicked a new page has been opened")
     void doToclickSignUp() {
         SignUpPage signUpPage = mainpage.clickSignUp();
@@ -43,10 +46,20 @@ public class MainPageTest {
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
     }
 
-    @RepeatedTest(2)
+    @ParameterizedTest
+    @ValueSource( strings = {"asdg@mail.ru", "svmyho111111@mail.ru", "asddewd2222dg@mail.ru"})
     @DisplayName("Verify that when email field can be filled")
-    void doRegister() {
-        SignUpPage signUpPage = mainpage.register("asdg@mail.ru");
+    void doRegister(String arg) {
+        SignUpPage signUpPage = mainpage.register(arg);
+        String heading = signUpPage.getAdventure();
+        assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+    }
+
+    @DisplayName("Verify that the email is filled values in the Csv")
+    @ParameterizedTest (name = "The value of {index} subtest ==> the rank of ''{0}'' the number is {1}")
+    @CsvFileSource(resources = "/githubLogin.csv")
+    void parareterizedTestCsvFile(String actual,  int rank) {
+        SignUpPage signUpPage = mainpage.register(actual);
         String heading = signUpPage.getAdventure();
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
     }
