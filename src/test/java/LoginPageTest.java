@@ -47,6 +47,12 @@ public class LoginPageTest {
     }
 
     @Test
+    void colorButtonTes() {
+        String colorButton = loginPage.getColorButton();
+        assertEquals("rgba(45, 164, 78, 1)", colorButton);
+    }
+
+    @Test
     void goToAnAccount() {
         SignUpPage signUpPage = loginPage.createAnAccount();
         String heading = signUpPage.getAdventure();

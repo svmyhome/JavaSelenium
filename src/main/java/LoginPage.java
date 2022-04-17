@@ -1,6 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+//TODO Create method that is checked color of the button ""
 public class LoginPage {
     private WebDriver driver;
 
@@ -32,6 +32,9 @@ public class LoginPage {
         return driver.findElement(error).getText();
     }
 
+    public String getColorButton() {
+        return driver.findElement(signInButton).getCssValue("background-color");
+    }
     public SignUpPage createAnAccount() {
         driver.findElement(linkSignUp).click();
         return new SignUpPage(driver);

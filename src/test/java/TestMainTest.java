@@ -1,4 +1,8 @@
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -15,14 +19,36 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestMainTest {
 
+    public static WebDriver driver;
+    public static LoginPage loginPage;
+    private static String pathChromedriver = "libs/chromedriver.exe";
+
     @BeforeAll
     static void beforeAllMethod() {
+        System.setProperty("webdriver.chrome.driver", pathChromedriver);
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
+        driver.manage().window().maximize(); // установка максимального размера экрана
+        driver.get("https://github.com/login");
+        loginPage = new LoginPage(driver);
         System.out.println("All class");
     }
+
+
 
     @BeforeEach
     void setUp() {
         System.out.println("each method");
+    }
+
+    @Test
+    @DisplayName("Verify that button is loacated")
+    void buttonLocated(){
+        WebElement butt = driver.findElement(By.xpath("//input[@name='commit']"));
+        System.out.println("coordinats Left Up corner" + butt.getLocation()); //coordinats Left Up corner
+        System.out.println("Length and wight in pixels" + butt.getSize()); //Length and wight in pixels
+        System.out.println("Coodrinates and size elements" + butt.getRect()); //Coodrinates and size elements
+        System.out.println("Get CSS Value" + butt.getCssValue("background-color")); //Get CSS Value
     }
 
     @Test
