@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,6 +93,21 @@ public class TestMainTest {
         assertTimeout(Duration.ofMillis(1), () -> Thread.sleep(10000), () -> "Testing prductivity");
     }
 
+    @Test
+    @DisplayName("Verify that two arrays are equals 1")
+    void twoArraysEquals1() {
+        List<String> expected = Arrays.asList("one", "two", "three");
+        List<String> actual = new ArrayList<>(expected);
+        assertIterableEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Verify that two arrays are equals 2")
+    void twoArraysEquals2() {
+        List<String> expected = Arrays.asList("one", "two", "three");
+        List<String> actual = Arrays.asList("one two three".split(" "));
+        assertIterableEquals(expected, actual);
+    }
 
     @AfterEach
     void tearDown() {
