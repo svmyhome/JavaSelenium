@@ -51,10 +51,10 @@ public class IframeTest {
 //        driver.findElement(By.xpath("//input[@id='geevopfmhv-button']")).click();
 
     }
-//    @AfterAll
-//    static void tearDown(){
-//        driver.quit();
-//    }
+    @AfterAll
+    static void tearDown(){
+        driver.quit();
+    }
 
 
 }
