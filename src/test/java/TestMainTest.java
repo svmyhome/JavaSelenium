@@ -143,5 +143,6 @@ public class TestMainTest {
     @AfterAll
     static void afterAllMethod() {
         System.out.println("All class");
+        driver.quit();
     }
 }
