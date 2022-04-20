@@ -7,9 +7,10 @@ public class MainPage {
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
+
     private By signInButton = By.xpath("//a[@href='/login']");
-    private By signUpButton = By.xpath("//a[contains(text(),'Sign up')]");
-    private By signUpGithub = By.xpath("//button[contains(text(),'Sign up for GitHub')]");
+    private By signUpButton = By.xpath("//a[normalize-space(text()) ='Sign up']");
+    private By signUpGithub = By.xpath("//button[normalize-space(text()) = 'Sign up for GitHub']");
     private By emailField = By.xpath("//input[@id='user_email']");
 
     public LoginPage clickSignIn() {

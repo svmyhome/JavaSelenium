@@ -59,7 +59,8 @@ public class LoginPageTest {
     void goToAnAccount() {
         SignUpPage signUpPage = loginPage.createAnAccount();
         String heading = signUpPage.getAdventure();
-        assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        assertEquals("Welcome to GitHub!\n" +
+                "Let’s begin the adventure", heading);
     }
 
     @AfterAll

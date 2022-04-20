@@ -5,9 +5,10 @@ import java.time.Duration;
 
 public class MainClass {
     public static WebDriver driver;
+    private static String pathChromedriver = "libs/chromedriver.exe";
 
     public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", pathChromedriver);
 
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание

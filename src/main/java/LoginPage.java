@@ -9,12 +9,12 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    private By heading = By.xpath("//h1[text()='Sign in to GitHub']");
+    private By heading = By.xpath("//h1[normalize-space(text())='Sign in to GitHub']");
     private By userField = By.xpath("//input[@id='login_field']");
     private By passField = By.xpath("//input[@id='password']");
     private By signInButton = By.xpath("//input[@name='commit']");
     private By error = By.xpath("//div[@class='px-2']");
-    private By linkSignUp = By.xpath("//a[text()='Create an account']");
+    private By linkSignUp = By.xpath("//a[normalize-space(text())='Create an account']");
 
 
     public LoginPage typeUserName(String username) {
