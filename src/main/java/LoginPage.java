@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 //TODO Create method that is checked color of the button ""
@@ -14,6 +15,7 @@ public class LoginPage {
     private By signInButton = By.xpath("//input[@name='commit']");
     private By error = By.xpath("//div[@class='px-2']");
     private By linkSignUp = By.xpath("//a[text()='Create an account']");
+
 
     public LoginPage typeUserName(String username) {
         driver.findElement(userField).sendKeys(username);

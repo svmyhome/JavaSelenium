@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,7 +26,8 @@ public class LoginPageTest {
         loginPage = new LoginPage(driver);
     }
 
-    @Test
+    @Test //TODO refactoring to parametrized test
+    @Step("Type {username.name}")
     void errorEmptyLoginPassword() {
         loginPage.LoginWithInvalidCreds("", "");
         String errText = loginPage.getErrorText();
@@ -33,6 +35,7 @@ public class LoginPageTest {
     }
 
     @Test
+    @Step("Type {username.name}")
     void errorEmptyPassword() {
         loginPage.LoginWithInvalidCreds("ssdsdas", "");
         String errText = loginPage.getErrorText();
