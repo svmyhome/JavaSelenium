@@ -10,16 +10,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-/** 50 lesson Actions */
+/**
+ * 50 lesson Actions
+ */
 
 public class ExplicitlyWaitTest {
     static WebDriver driver;
     static WebDriverWait wait;
     static WebDriverWait wait1;
+    private static String pathChromedriver = "libs/chromedriver.exe";
 
     public static void main(String[] args) throws InterruptedException {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
+
+        System.setProperty("webdriver.chrome.driver", pathChromedriver);
 
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -31,7 +35,7 @@ public class ExplicitlyWaitTest {
         wait1.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='mw-headline']")));
 
         // WebElement el = driver.findElement((By.xpath("//div[@class='VfPpkd-Jh9lGc']")));
-   //     System.out.println(el.getText());
+        //     System.out.println(el.getText());
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Далее']"))); //TODO 50 Lessons not work I think Idea don't support russian char
         driver.close();
     }

@@ -4,6 +4,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 
@@ -14,11 +15,15 @@ public class MainPageTest {
     private static WebDriver driver;
     private static MainPage mainpage;
     private static String pathChromedriver = "libs/chromedriver.exe";
+   // private static ChromeOptions chromeOptions =new ChromeOptions(); // включение режима не отображени хрома chromeOptions.setHeadless(true); //
+
+
 
     @BeforeAll
     static void setUpAll() {
         System.setProperty("webdriver.chrome.driver", pathChromedriver);
         driver = new ChromeDriver();
+       // chromeOptions.setHeadless(true); // включение режима не отображени хрома
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         driver.manage().window().maximize(); // установка максимального размера экрана
         mainpage = new MainPage(driver);

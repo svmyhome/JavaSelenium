@@ -42,6 +42,17 @@ public class SignUpPage {
         return this;
     }
 
+    /** WAITS selenium-support.jar
+     * ExpectedCondition
+     * ExpectedConditions
+     * FluentWait
+     * LoadableComponent
+     * Sleeper
+     * SlowLoadableComponent
+     * Wait
+     * WedDriverWait
+     * */
+
     public SignUpPage waitField(By field) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(field));
