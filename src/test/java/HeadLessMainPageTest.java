@@ -1,13 +1,20 @@
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,12 +30,14 @@ public class HeadLessMainPageTest {
     static void setUpAll() {
         System.setProperty("webdriver.chrome.driver", pathChromedriver);
         ChromeOptions chromeOptions = new ChromeOptions(); // включение режима не отображени хрома chromeOptions.setHeadless(true); //
-        chromeOptions.setHeadless(true); // включение режима не отображени хрома
+        //   chromeOptions.setHeadless(true); // // вместо этого используем  chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless"); //включение режима не отображени хрома
+        chromeOptions.addArguments("window-size=1800x900");
         driver = new ChromeDriver(chromeOptions);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         // IN HEADLESS DOSEN'T WORK IF YOU WANT TO SET RESOLUTION ON YOURS SCREEN YOU MUST USE window().setSize(1240, 800)driver.manage().window().maximize(); // установка максимального размера экрана
-        driver.manage().window().setSize(new Dimension(1024,768));
+        // driver.manage().window().setSize(new Dimension(1024,768)); // вместо этого используем  chromeOptions.addArguments("window-size=1800x900");
         mainpage = new MainPage(driver);
     }
 
@@ -41,7 +50,16 @@ public class HeadLessMainPageTest {
     @Test
     @DisplayName("Verify that when button 'SignIn' has been clicked a new page has been opened")
     void goTologinPage() {
+        Date dateNow = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("hh_mm_ss");
+        String filename = format.format(dateNow) + ".png";
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         LoginPage loginPage = mainpage.clickSignIn();
+        try {
+            FileUtils.copyFile(screenshot, new File("C:\\TEMP\\" + filename)); //нужно импортнуть зависимость  implementation 'commons-io:commons-io:2.11.0'
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String heading = loginPage.getHeadingText();
         assertEquals("Sign in to GitHub", heading);
     }
