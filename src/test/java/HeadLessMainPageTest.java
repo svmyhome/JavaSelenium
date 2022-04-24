@@ -2,29 +2,33 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//TODO SCREENSHOTS
 
-public class MainPageTest {
+public class HeadLessMainPageTest {
     private static WebDriver driver;
     private static MainPage mainpage;
     private static String pathChromedriver = "libs/chromedriver.exe";
 
 
-
     @BeforeAll
     static void setUpAll() {
         System.setProperty("webdriver.chrome.driver", pathChromedriver);
-        driver = new ChromeDriver();
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions(); // включение режима не отображени хрома chromeOptions.setHeadless(true); //
+        chromeOptions.setHeadless(true); // включение режима не отображени хрома
+        driver = new ChromeDriver(chromeOptions);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
-        driver.manage().window().maximize(); // установка максимального размера экрана
+        // IN HEADLESS DOSEN'T WORK IF YOU WANT TO SET RESOLUTION ON YOURS SCREEN YOU MUST USE window().setSize(1240, 800)driver.manage().window().maximize(); // установка максимального размера экрана
+        driver.manage().window().setSize(new Dimension(1024,768));
         mainpage = new MainPage(driver);
     }
 
@@ -51,7 +55,7 @@ public class MainPageTest {
     }
 
     @ParameterizedTest
-    @ValueSource( strings = {"asdg@mail.ru", "svmyho111111@mail.ru", "asddewd2222dg@mail.ru"})
+    @ValueSource(strings = {"asdg@mail.ru", "svmyho111111@mail.ru", "asddewd2222dg@mail.ru"})
     @DisplayName("Verify that when email field can be filled")
     void doRegister(String arg) {
         SignUpPage signUpPage = mainpage.register(arg);
@@ -60,9 +64,9 @@ public class MainPageTest {
     }
 
     @DisplayName("Verify that the email is filled values in the Csv")
-    @ParameterizedTest (name = "The value of {index} subtest ==> the rank of ''{0}'' the number is {1}")
+    @ParameterizedTest(name = "The value of {index} subtest ==> the rank of ''{0}'' the number is {1}")
     @CsvFileSource(resources = "/githubLogin.csv")
-    void parareterizedTestCsvFile(String actual,  int rank) {
+    void parareterizedTestCsvFile(String actual, int rank) {
         SignUpPage signUpPage = mainpage.register(actual);
         String heading = signUpPage.getAdventure();
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);

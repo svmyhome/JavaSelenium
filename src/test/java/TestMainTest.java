@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * AssertTimeout chapter 25
  */
 //TODO @extendWith()
+    //TODO Сделпть загрузку с дополнительными модулями через профиль ChromeProfile(File profile)
+//TODO need to made authorization with cookies
+//List<Cookie> authCookies = authorizationResponse.getCookies();
+//authCookies.forEach(driver.manage()::cookies);
 
 public class TestMainTest {
 
