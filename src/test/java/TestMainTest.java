@@ -16,8 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * AssertTimeout chapter 25
  */
 //TODO @extendWith()
-    //TODO Сделпть загрузку с дополнительными модулями через профиль ChromeProfile(File profile)
+//TODO Сделпть загрузку с дополнительными модулями через профиль ChromeProfile(File profile)
 //TODO need to made authorization with cookies
+//TODO create selenid test
+//TODO create videorecord
+//TODO create log4j lesson 10.4
+//TODO create HAR file lesson 11.3
+
 //List<Cookie> authCookies = authorizationResponse.getCookies();
 //authCookies.forEach(driver.manage()::cookies);
 
@@ -39,7 +44,6 @@ public class TestMainTest {
     }
 
 
-
     @BeforeEach
     void setUp() {
         System.out.println("each method");
@@ -47,7 +51,7 @@ public class TestMainTest {
 
     @Test
     @DisplayName("Verify that button is loacated")
-    void buttonLocated(){
+    void buttonLocated() {
         WebElement butt = driver.findElement(By.xpath("//input[@name='commit']"));
         System.out.println("coordinats Left Up corner" + butt.getLocation()); //coordinats Left Up corner
         System.out.println("Length and wight in pixels" + butt.getSize()); //Length and wight in pixels
