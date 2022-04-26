@@ -1,8 +1,7 @@
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -27,15 +26,16 @@ public class LoginPageTest {
     }
 
     @Test //TODO refactoring to parametrized test
-    @Step("Type {username.name}")
-    void errorEmptyLoginPassword() {
-        loginPage.LoginWithInvalidCreds("", "");
+    @DisplayName("Verify that when login and password is empty the error is exist")
+    @ParameterizedTest(name = "The value of {index} subtest ==> the rank of ''{0}'' is {2}")
+    @CsvSource(value = {", , 1", "QWERTY, qwerty1, 2", "123456, 123456, 3"})
+    void errorEmptyLoginPassword(String username1, String password1, int rank) {
+        loginPage.LoginWithInvalidCreds(username1, password1);
         String errText = loginPage.getErrorText();
         assertEquals("Incorrect username or password.", errText);
     }
 
     @Test
-    @Step("Type {username.name}")
     void errorEmptyPassword() {
         loginPage.LoginWithInvalidCreds("ssdsdas", "");
         String errText = loginPage.getErrorText();
@@ -43,6 +43,7 @@ public class LoginPageTest {
     }
 
     @Test
+    @Step("login is {username}")
     void errorEmptyLogin() {
         loginPage.LoginWithInvalidCreds("", "sdsdsdsd");
         String errText = loginPage.getErrorText();

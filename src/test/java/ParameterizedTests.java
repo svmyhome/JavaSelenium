@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -31,6 +32,7 @@ public class ParameterizedTests {
     @DisplayName("Verify that the Values in the Csv are equal")
     @ParameterizedTest
     @CsvSource(value = {"QWERTY, qwerty", "QWERTY, qwerty1", "123456, 123456"})
+    @Step("Ожидаемое значение {expected} полученное значение {actual}")
     void parareterizedTestCsv(String actual, String expected) {
         assertEquals(expected, actual.toLowerCase(), "Value are not equal!!");
     }

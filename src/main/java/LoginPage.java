@@ -1,6 +1,7 @@
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
 //TODO Create method that is checked color of the button ""
 public class LoginPage {
     private WebDriver driver;
@@ -21,6 +22,7 @@ public class LoginPage {
         driver.findElement(userField).sendKeys(username);
         return this;
     }
+
     public LoginPage typeUserPass(String pass) {
         driver.findElement(passField).sendKeys(pass);
         return this;
@@ -37,6 +39,7 @@ public class LoginPage {
     public String getColorButton() {
         return driver.findElement(signInButton).getCssValue("background-color");
     }
+
     public SignUpPage createAnAccount() {
         driver.findElement(linkSignUp).click();
         return new SignUpPage(driver);
