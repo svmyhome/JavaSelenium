@@ -55,13 +55,13 @@ public class HeadLessMainPageTest {
         return Files.readAllBytes(Paths.get("C:\\TEMP", resourceName));
     }
 
-    public static String getFilename() {
+    public static String getFilename() { //TODO move to helper
         Date dateNow = new Date();
         SimpleDateFormat format = new SimpleDateFormat("hh_mm_ss");
         String filename = format.format(dateNow) + ".png";
         return filename;
     }
-    public static void TakeScreen(String filename) {
+    public static void TakeScreen(String filename) { //TODO move to helper
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenshot, new File("C:\\TEMP\\" + filename)); //нужно импортнуть зависимость  implementation 'commons-io:commons-io:2.11.0'
