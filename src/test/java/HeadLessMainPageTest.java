@@ -1,3 +1,4 @@
+import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -44,50 +47,74 @@ public class HeadLessMainPageTest {
     @BeforeEach
     void setUpEach() {
         driver.get("https://github.com/");
+        Date dateNow = new Date();
     }
 
+    @Attachment
+    public static byte[] getBytes(String resourceName) throws IOException {
+        return Files.readAllBytes(Paths.get("C:\\TEMP", resourceName));
+    }
 
-    @Test
-    @DisplayName("Verify that when button 'SignIn' has been clicked a new page has been opened")
-    void goTologinPage() {
+    public static String getFilename() {
         Date dateNow = new Date();
         SimpleDateFormat format = new SimpleDateFormat("hh_mm_ss");
         String filename = format.format(dateNow) + ".png";
+        return filename;
+    }
+    public static void TakeScreen(String filename) {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        LoginPage loginPage = mainpage.clickSignIn();
         try {
             FileUtils.copyFile(screenshot, new File("C:\\TEMP\\" + filename)); //нужно импортнуть зависимость  implementation 'commons-io:commons-io:2.11.0'
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    @DisplayName("Verify that when button 'SignIn' has been clicked a new page has been opened")
+    void goTologinPage() throws IOException {
+        TakeScreen(getFilename());
+        getBytes(getFilename());
+        LoginPage loginPage = mainpage.clickSignIn();
         String heading = loginPage.getHeadingText();
         assertEquals("Sign in to GitHub", heading);
+        TakeScreen(getFilename());
+        getBytes(getFilename());
     }
 
     @RepeatedTest(2)
     @DisplayName("Verify that when button 'SignUP' has been clicked a new page has been opened")
-    void doToclickSignUp() {
+    void doToclickSignUp() throws IOException {
         SignUpPage signUpPage = mainpage.clickSignUp();
         String heading = signUpPage.getAdventure();
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        TakeScreen(getFilename());
+        getBytes(getFilename());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"asdg@mail.ru", "svmyho111111@mail.ru", "asddewd2222dg@mail.ru"})
     @DisplayName("Verify that when email field can be filled")
-    void doRegister(String arg) {
+    void doRegister(String arg) throws IOException {
+        TakeScreen(getFilename());
+        getBytes(getFilename());
         SignUpPage signUpPage = mainpage.register(arg);
         String heading = signUpPage.getAdventure();
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        TakeScreen(getFilename());
+        getBytes(getFilename());
     }
 
     @DisplayName("Verify that the email is filled values in the Csv")
     @ParameterizedTest(name = "The value of {index} subtest ==> the rank of ''{0}'' the number is {1}")
     @CsvFileSource(resources = "/githubLogin.csv")
-    void parareterizedTestCsvFile(String actual, int rank) {
+    void parareterizedTestCsvFile(String actual, int rank) throws IOException {
+        TakeScreen(getFilename());
+        getBytes(getFilename());
         SignUpPage signUpPage = mainpage.register(actual);
         String heading = signUpPage.getAdventure();
         assertEquals("Welcome to GitHub!\n" + "Let’s begin the adventure", heading);
+        TakeScreen(getFilename());
+        getBytes(getFilename());
     }
 
     @AfterAll
