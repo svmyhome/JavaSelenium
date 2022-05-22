@@ -4,6 +4,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.monte.media.Format;
+import org.monte.media.FormatKeys;
+import org.monte.media.math.Rational;
+import org.monte.screenrecorder.ScreenRecorder;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -11,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,17 +26,44 @@ import java.time.Duration;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.monte.media.FormatKeys.*;
+import static org.monte.media.FormatKeys.FrameRateKey;
+import static org.monte.media.VideoFormatKeys.*;
+import static org.monte.media.VideoFormatKeys.QualityKey;
 
 //TODO SCREENSHOTS
 
 public class HeadLessMainPageTest {
     private static WebDriver driver;
+    private static ScreenRecorder screenRecorder;
     private static MainPage mainpage;
     private static String pathChromedriver = "libs/chromedriver.exe";
 
 
     @BeforeAll
     static void setUpAll() {
+        GraphicsConfiguration gconfig = GraphicsEnvironment
+                .getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice()
+                .getDefaultConfiguration();
+
+        try {
+            screenRecorder = new ScreenRecorder(gconfig,
+                    new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
+                    new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey,
+                            ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+                            CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+                            DepthKey, (int) 24, FrameRateKey, Rational.valueOf(15),
+                            QualityKey, 1.0f,
+                            KeyFrameIntervalKey, (int) (15 * 60)),
+                    new Format(MediaTypeKey, MediaType.VIDEO,
+                            EncodingKey, "black", FrameRateKey, Rational.valueOf(30)), null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
+
         System.setProperty("webdriver.chrome.driver", pathChromedriver);
         ChromeOptions chromeOptions = new ChromeOptions(); // включение режима не отображени хрома chromeOptions.setHeadless(true); //
         //   chromeOptions.setHeadless(true); // // вместо этого используем  chromeOptions.addArguments("--headless");
@@ -47,6 +79,11 @@ public class HeadLessMainPageTest {
 
     @BeforeEach
     void setUpEach() {
+        try {
+            screenRecorder.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         driver.get("https://github.com/");
         Date dateNow = new Date();
     }
@@ -129,6 +166,14 @@ public class HeadLessMainPageTest {
         getBytes(filenameAfter);
     }
 
+    @AfterEach
+    void tearDownEach() {
+        try {
+            screenRecorder.stop();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @AfterAll
     static void tearDown() {
         driver.quit();

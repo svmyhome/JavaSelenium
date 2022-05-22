@@ -2,27 +2,80 @@ import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.monte.media.Format;
+import org.monte.media.FormatKeys;
+import org.monte.media.math.Rational;
+import org.monte.screenrecorder.ScreenRecorder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.awt.*;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.monte.media.FormatKeys.*;
+import static org.monte.media.FormatKeys.FrameRateKey;
+import static org.monte.media.VideoFormatKeys.*;
+import static org.monte.media.VideoFormatKeys.QualityKey;
+
 //TODO is needed to add in all methods @Displayname
 //TODO must be added to some methods @RepeatedTest
 public class LoginPageTest {
     public static WebDriver driver;
     public static LoginPage loginPage;
+    private static ScreenRecorder screenRecorder;
     private static String pathChromedriver = "libs/chromedriver.exe";
 
     @BeforeAll
     static void setUpAll() {
+        GraphicsConfiguration gconfig = GraphicsEnvironment
+                .getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice()
+                .getDefaultConfiguration();
+
+        try {
+            screenRecorder = new ScreenRecorder(gconfig,
+                    new Format(MediaTypeKey, FormatKeys.MediaType.FILE, MimeTypeKey, MIME_AVI),
+                    new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey,
+                            ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+                            CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+                            DepthKey, (int) 24, FrameRateKey, Rational.valueOf(15),
+                            QualityKey, 1.0f,
+                            KeyFrameIntervalKey, (int) (15 * 60)),
+                    new Format(MediaTypeKey, MediaType.VIDEO,
+                            EncodingKey, "black", FrameRateKey, Rational.valueOf(30)), null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
+
+
         System.setProperty("webdriver.chrome.driver", pathChromedriver);
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // принудительное ожидание
         driver.manage().window().maximize(); // установка максимального размера экрана
         driver.get("https://github.com/login");
         loginPage = new LoginPage(driver);
+    }
+    @BeforeEach
+    void setUpEach() {
+        try {
+            screenRecorder.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @AfterEach
+    void tearDownEach() {
+        try {
+            screenRecorder.stop();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test //TODO refactoring to parametrized test
